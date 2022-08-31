@@ -6,7 +6,7 @@ const notesDb = require('../db/db.json');
 const { v4: uuidv4 } = require('uuid');
 
 router.get('/notes', (req, res) => {
-  res.json(notesDb);
+  res.sendFile(path.join(__dirname, '../db/db.json'));
 });
 
 router.post('/notes', (req, res) => {
@@ -26,7 +26,13 @@ router.post('/notes', (req, res) => {
     const parsedNotes = JSON.parse(data);
     parsedNotes.push(newNote);
 
-    fs.writeFile('./db/db.json', JSON.stringify(parsedNotes, null, 2));
+    fs.writeFile(
+      './db/db.json',
+      JSON.stringify(parsedNotes, null, 2),
+      (err) => {
+        err ? console.error(err) : console.info('Successfully wrote db.json');
+      }
+    );
   });
 });
 
