@@ -8,9 +8,8 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/notes.html'));
 });
 
-router.get('/:uuid', (req, res) => {
-  const id = req.params.uuid;
-  res.json(notesDb); 
+router.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './index.html'));
 });
 
 module.exports = router;
